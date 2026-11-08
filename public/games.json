@@ -1,0 +1,293 @@
+[
+  {
+    "id": "eaglercraft-1-12-2",
+    "title": "Eaglercraft 1.12.2",
+    "category": "Sandbox",
+    "description": "Full Minecraft 1.12.2 Java Edition ported to browser WebAssembly & JavaScript. Includes singleplayer worlds, multiplayer servers, shaders, sound packs, and custom skins.",
+    "iframeUrl": "https://eaglercraft.com/mc/1.12.2/",
+    "mirrors": [
+      {
+        "name": "Eaglercraft.com (Official 1.12.2)",
+        "url": "https://eaglercraft.com/mc/1.12.2/"
+      },
+      {
+        "name": "EaglercraftX Mirror (Orion)",
+        "url": "https://launcher.orionos.org/eagler/1.12.2/"
+      },
+      {
+        "name": "Deevis Eagler Mirror",
+        "url": "https://g.deev.is/eaglercraft/"
+      },
+      {
+        "name": "EaglercraftX GitHub Mirror",
+        "url": "https://eaglercraftx.github.io/"
+      }
+    ],
+    "featured": true,
+    "badge": "Minecraft 1.12.2",
+    "controls": [
+      "WASD / Arrow Keys - Walk and move",
+      "Spacebar - Jump / Swim up",
+      "Left Click - Mine blocks / Attack",
+      "Right Click - Place blocks / Use item",
+      "Mouse Movement - Look around (click canvas to lock mouse)",
+      "E - Open inventory / Crafting",
+      "Shift - Sneak / Crouch",
+      "Ctrl / Double W - Sprint",
+      "Escape - Pause menu / Unlock cursor",
+      "1 to 9 - Hotbar item selection",
+      "Q - Drop held item"
+    ],
+    "sandbox": "allow-scripts allow-same-origin allow-pointer-lock allow-forms allow-modals allow-downloads",
+    "sourceNote": "Ported via TeaVM & WebAssembly to run Java bytecode directly in browser.",
+    "aspectRatio": "16/9",
+    "color": "from-emerald-600 via-teal-700 to-emerald-950"
+  },
+  {
+    "id": "retro-bowl",
+    "title": "Retro Bowl",
+    "category": "Sports",
+    "description": "The ultimate 8-bit American Football management and arcade simulation game. Call plays, draft rookies, and lead your franchise to glory.",
+    "iframeUrl": "https://game316009.hostingerapp.com/",
+    "mirrors": [
+      {
+        "name": "Primary Server",
+        "url": "https://game316009.hostingerapp.com/"
+      },
+      {
+        "name": "Backup Server",
+        "url": "https://retrobowlunblocked.github.io/"
+      }
+    ],
+    "featured": true,
+    "badge": "Popular",
+    "controls": [
+      "Mouse / Touch - Aim and throw pass",
+      "W/S or Up/Down - Dodge defenders",
+      "Space / Click - Dive forward",
+      "Click play calls to select tactics"
+    ],
+    "sandbox": "allow-scripts allow-same-origin allow-pointer-lock allow-forms",
+    "aspectRatio": "16/9",
+    "color": "from-amber-600 via-orange-700 to-amber-950"
+  },
+  {
+    "id": "cookie-clicker",
+    "title": "Cookie Clicker",
+    "category": "Arcade",
+    "description": "The iconic idle incremental game. Click the giant cookie, hire grandmas, construct cookie farms, factories, and portals to amass trillions of cookies.",
+    "iframeUrl": "/games/cookie-clicker/index.html",
+    "mirrors": [
+      {
+        "name": "Local Fast Engine (Offline-Ready)",
+        "url": "/games/cookie-clicker/index.html"
+      },
+      {
+        "name": "DashNet Official Web",
+        "url": "https://orteil.dashnet.org/cookieclicker/"
+      }
+    ],
+    "featured": true,
+    "badge": "Classic Idle",
+    "controls": [
+      "Left Click - Click the big cookie",
+      "Store Panel - Buy upgrades and buildings",
+      "Stats / Achievements - Track empire production"
+    ],
+    "sandbox": "allow-scripts allow-same-origin allow-forms",
+    "aspectRatio": "16/9",
+    "color": "from-amber-700 via-yellow-800 to-stone-900"
+  },
+  {
+    "id": "slope-3d",
+    "title": "Slope 3D",
+    "category": "Action",
+    "description": "High-velocity 3D runner where you guide a rolling neon ball through an endless futuristic obstacle course. Speed ramps up with every second survived.",
+    "iframeUrl": "https://kdata1.com/2020/05/slope/",
+    "mirrors": [
+      {
+        "name": "KData Mirror",
+        "url": "https://kdata1.com/2020/05/slope/"
+      },
+      {
+        "name": "GitHub Pages Mirror",
+        "url": "https://slope-game.github.io/"
+      }
+    ],
+    "featured": true,
+    "badge": "High Speed",
+    "controls": [
+      "A / D or Left / Right Arrows - Steer left and right",
+      "Stay on track and dodge red barriers",
+      "Avoid falling into the abyss"
+    ],
+    "sandbox": "allow-scripts allow-same-origin allow-pointer-lock",
+    "aspectRatio": "16/9",
+    "color": "from-emerald-500 via-cyan-700 to-slate-950"
+  },
+  {
+    "id": "game-2048",
+    "title": "2048 Classic",
+    "category": "Puzzle",
+    "description": "Join matching numbered tiles and slide the grid strategically to build the legendary 2048 tile and reach higher highscores.",
+    "iframeUrl": "/games/2048/index.html",
+    "mirrors": [
+      {
+        "name": "Local Engine (Instant Load)",
+        "url": "/games/2048/index.html"
+      },
+      {
+        "name": "Play2048.co Mirror",
+        "url": "https://play2048.co/"
+      }
+    ],
+    "featured": false,
+    "badge": "Brain",
+    "controls": [
+      "Arrow Keys / WASD / Swipe - Slide all tiles on the board",
+      "Tiles with the same number merge into one",
+      "R - Restart board"
+    ],
+    "sandbox": "allow-scripts allow-same-origin",
+    "aspectRatio": "1/1",
+    "color": "from-amber-500 via-amber-700 to-zinc-900"
+  },
+  {
+    "id": "flappy-bird",
+    "title": "Flappy Pixel",
+    "category": "Arcade",
+    "description": "Tap or press space to flap wings and navigate through pipes without hitting obstacles in this retro arcade classic.",
+    "iframeUrl": "/games/flappy/index.html",
+    "mirrors": [
+      {
+        "name": "Local Canvas Engine",
+        "url": "/games/flappy/index.html"
+      }
+    ],
+    "featured": false,
+    "badge": "Skill",
+    "controls": [
+      "Spacebar / Click / Tap - Flap wings upwards",
+      "P - Pause game",
+      "R - Quick restart"
+    ],
+    "sandbox": "allow-scripts allow-same-origin",
+    "aspectRatio": "4/3",
+    "color": "from-cyan-600 via-blue-700 to-indigo-950"
+  },
+  {
+    "id": "neon-snake",
+    "title": "Neon Snake Arcade",
+    "category": "Retro",
+    "description": "Vibrant arcade reboot of Snake with multiple speed tiers, glowing energy pellets, particle effects, and high score tracking.",
+    "iframeUrl": "/games/snake/index.html",
+    "mirrors": [
+      {
+        "name": "Local Canvas Arcade",
+        "url": "/games/snake/index.html"
+      }
+    ],
+    "featured": false,
+    "badge": "Retro",
+    "controls": [
+      "Arrow Keys or W/A/S/D - Turn snake direction",
+      "Space - Pause / Resume",
+      "Eat neon orbs to grow longer and boost multiplier"
+    ],
+    "sandbox": "allow-scripts allow-same-origin",
+    "aspectRatio": "4/3",
+    "color": "from-green-500 via-emerald-700 to-zinc-950"
+  },
+  {
+    "id": "space-invaders",
+    "title": "Space Defender 1980",
+    "category": "Retro",
+    "description": "Defend the planetary perimeter against descending alien fleets. Blast through shields, intercept mystery ships, and dodge incoming laser barrages.",
+    "iframeUrl": "/games/space-invaders/index.html",
+    "mirrors": [
+      {
+        "name": "Local Retro Engine",
+        "url": "/games/space-invaders/index.html"
+      }
+    ],
+    "featured": false,
+    "badge": "Arcade",
+    "controls": [
+      "Left / Right Arrows or A/D - Move starfighter",
+      "Spacebar - Fire laser cannon",
+      "P - Pause game"
+    ],
+    "sandbox": "allow-scripts allow-same-origin",
+    "aspectRatio": "4/3",
+    "color": "from-purple-600 via-indigo-800 to-zinc-950"
+  },
+  {
+    "id": "brick-breakout",
+    "title": "Neon Brick Breaker",
+    "category": "Arcade",
+    "description": "Fast-paced paddle action with multi-ball powerups, explosive bricks, laser shots, and challenging brick layouts.",
+    "iframeUrl": "/games/breakout/index.html",
+    "mirrors": [
+      {
+        "name": "Local Arcade Engine",
+        "url": "/games/breakout/index.html"
+      }
+    ],
+    "featured": false,
+    "badge": "Casual",
+    "controls": [
+      "Mouse / Arrow Keys - Steer paddle horizontally",
+      "Spacebar / Click - Launch ball / Fire lasers",
+      "Catch powerup capsules for bonus effects"
+    ],
+    "sandbox": "allow-scripts allow-same-origin",
+    "aspectRatio": "4/3",
+    "color": "from-rose-600 via-red-800 to-stone-950"
+  },
+  {
+    "id": "chrome-dino",
+    "title": "T-Rex Runner",
+    "category": "Retro",
+    "description": "The classic desert runner game. Leap over cacti and duck beneath pterodactyls with day and night cycles.",
+    "iframeUrl": "/games/dino/index.html",
+    "mirrors": [
+      {
+        "name": "Local Offline Engine",
+        "url": "/games/dino/index.html"
+      }
+    ],
+    "featured": false,
+    "badge": "Offline",
+    "controls": [
+      "Space / Up Arrow - Jump",
+      "Down Arrow - Crouch / Duck under birds",
+      "Speed continuously increases"
+    ],
+    "sandbox": "allow-scripts allow-same-origin",
+    "aspectRatio": "16/9",
+    "color": "from-stone-500 via-zinc-700 to-neutral-900"
+  },
+  {
+    "id": "neon-pong",
+    "title": "Cyber Pong Tournament",
+    "category": "Sports",
+    "description": "Futuristic electronic table tennis featuring smart AI opponents, curved ball physics, and 2-player local vs mode.",
+    "iframeUrl": "/games/pong/index.html",
+    "mirrors": [
+      {
+        "name": "Local Canvas Engine",
+        "url": "/games/pong/index.html"
+      }
+    ],
+    "featured": false,
+    "badge": "2 Player",
+    "controls": [
+      "Player 1: W/S Keys or Mouse",
+      "Player 2 (in 2P mode): Up/Down Arrow Keys",
+      "Space: Serve ball / Pause"
+    ],
+    "sandbox": "allow-scripts allow-same-origin",
+    "aspectRatio": "16/9",
+    "color": "from-blue-600 via-cyan-800 to-slate-950"
+  }
+]

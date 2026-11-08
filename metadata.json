@@ -1,0 +1,6 @@
+{
+  "name": "Unblocked Games Vault",
+  "description": "An unblocked games portal featuring Eaglercraft 1.12.2 and popular web games loaded securely via iframe and JSON configuration, with tab cloaking and fullscreen mode.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

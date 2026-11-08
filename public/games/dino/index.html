@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>T-Rex Runner</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+    body {
+      background: #18181b;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      color: #fafafa;
+      font-family: monospace;
+    }
+    .hud {
+      display: flex;
+      justify-content: space-between;
+      width: 600px;
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+    canvas {
+      background: #27272a;
+      border: 2px solid #52525b;
+      border-radius: 6px;
+    }
+    .help { margin-top: 10px; font-size: 13px; color: #a1a1aa; }
+  </style>
+</head>
+<body>
+  <div class="hud">
+    <div>HI <span id="high">00000</span></div>
+    <div>SCORE <span id="score">00000</span></div>
+  </div>
+  <canvas id="c" width="600" height="200"></canvas>
+  <div class="help">Press <b>SPACE</b> or <b>UP</b> to Jump, <b>DOWN</b> to Duck.</div>
+
+  <script>
+    const canvas = document.getElementById('c');
+    const ctx = canvas.getContext('2d');
+
+    let dino = { x: 50, y: 130, w: 28, h: 42, vy: 0, jump: -12.5, g: 0.7, grounded: true, duck: false };
+    let obstacles = [];
+    let speed = 6;
+    let score = 0;
+    let high = parseInt(localStorage.getItem('ubg_dino_high') || '0', 10);
+    document.getElementById('high').textContent = high.toString().padStart(5, '0');
+    let gameOver = false;
+    let frame = 0;
+
+    function jump() {
+      if (gameOver) {
+        reset();
+      } else if (dino.grounded) {
+        dino.vy = dino.jump;
+        dino.grounded = false;
+      }
+    }
+
+    function reset() {
+      dino.y = 130;
+      dino.vy = 0;
+      dino.grounded = true;
+      dino.duck = false;
+      obstacles = [];
+      speed = 6;
+      score = 0;
+      frame = 0;
+      gameOver = false;
+    }
+
+    window.addEventListener('keydown', e => {
+      if (e.code === 'Space' || e.code === 'ArrowUp') {
+        e.preventDefault();
+        jump();
+      } else if (e.code === 'ArrowDown') {
+        e.preventDefault();
+        dino.duck = true;
+      }
+    });
+
+    window.addEventListener('keyup', e => {
+      if (e.code === 'ArrowDown') {
+        dino.duck = false;
+      }
+    });
+
+    canvas.addEventListener('click', jump);
+
+    function update() {
+      if (gameOver) return;
+      frame++;
+      score += 0.2;
+      document.getElementById('score').textContent = Math.floor(score).toString().padStart(5, '0');
+      if (score > high) {
+        high = Math.floor(score);
+        document.getElementById('high').textContent = high.toString().padStart(5, '0');
+        localStorage.setItem('ubg_dino_high', high);
+      }
+
+      speed += 0.001;
+
+      // Dino physics
+      dino.vy += dino.g;
+      dino.y += dino.vy;
+      const groundY = dino.duck ? 146 : 130;
+      if (dino.y >= groundY) {
+        dino.y = groundY;
+        dino.vy = 0;
+        dino.grounded = true;
+      }
+
+      // Spawn obstacles
+      if (frame % Math.floor(75 + Math.random() * 60) === 0) {
+        const isBird = Math.random() < 0.3 && score > 150;
+        obstacles.push({
+          x: canvas.width,
+          y: isBird ? (Math.random() < 0.5 ? 115 : 140) : 136,
+          w: isBird ? 30 : 20,
+          h: isBird ? 20 : 36,
+          isBird: isBird
+        });
+      }
+
+      // Move obstacles
+      for (let i = obstacles.length - 1; i >= 0; i--) {
+        const obs = obstacles[i];
+        obs.x -= speed;
+
+        // Collision
+        const currentH = dino.duck ? 26 : 42;
+        if (dino.x + dino.w - 6 > obs.x && dino.x + 6 < obs.x + obs.w &&
+            dino.y + currentH > obs.y && dino.y < obs.y + obs.h) {
+          gameOver = true;
+        }
+
+        if (obs.x < -40) obstacles.splice(i, 1);
+      }
+    }
+
+    function draw() {
+      ctx.fillStyle = '#27272a';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Ground line
+      ctx.strokeStyle = '#71717a';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(0, 172);
+      ctx.lineTo(canvas.width, 172);
+      ctx.stroke();
+
+      // Dino
+      ctx.fillStyle = '#f4f4f5';
+      const currentH = dino.duck ? 26 : 42;
+      const currentW = dino.duck ? 38 : 28;
+      ctx.fillRect(dino.x, dino.y, currentW, currentH);
+
+      // Eye
+      ctx.fillStyle = '#27272a';
+      ctx.fillRect(dino.x + (dino.duck ? 28 : 18), dino.y + 4, 4, 4);
+
+      // Obstacles
+      ctx.fillStyle = '#10b981';
+      obstacles.forEach(obs => {
+        if (obs.isBird) {
+          ctx.fillStyle = '#f59e0b';
+          ctx.fillRect(obs.x, obs.y, obs.w, obs.h);
+          ctx.fillRect(obs.x - 6, obs.y + 6, 6, 8); // wing
+        } else {
+          ctx.fillStyle = '#10b981';
+          ctx.fillRect(obs.x, obs.y, obs.w, obs.h);
+          ctx.fillRect(obs.x - 4, obs.y + 8, 4, 12);
+          ctx.fillRect(obs.x + obs.w, obs.y + 12, 4, 12);
+        }
+      });
+
+      if (gameOver) {
+        ctx.fillStyle = 'rgba(0,0,0,0.7)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#ef4444';
+        ctx.font = '700 24px monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('G A M E  O V E R', canvas.width / 2, 90);
+        ctx.fillStyle = '#fff';
+        ctx.font = '500 14px monospace';
+        ctx.fillText('PRESS SPACE TO RESTART', canvas.width / 2, 120);
+      }
+    }
+
+    function loop() {
+      update();
+      draw();
+      requestAnimationFrame(loop);
+    }
+    loop();
+  </script>
+</body>
+</html>

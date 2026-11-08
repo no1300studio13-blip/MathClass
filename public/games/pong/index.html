@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cyber Pong</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+    body {
+      background: #09090b;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      color: #fff;
+      font-family: system-ui, sans-serif;
+    }
+    .hud {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 640px;
+      margin-bottom: 12px;
+      padding: 0 10px;
+    }
+    .score-txt { font-size: 28px; font-weight: 800; font-family: monospace; }
+    .mode-btn {
+      background: #27272a;
+      border: 1px solid #3f3f46;
+      color: #38bdf8;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    canvas {
+      background: #0f172a;
+      border: 2px solid #38bdf8;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+    }
+    .guide {
+      margin-top: 12px;
+      font-size: 13px;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+  <div class="hud">
+    <div class="score-txt" id="p1-score">P1: 0</div>
+    <button class="mode-btn" id="mode-btn" onclick="toggleMode()">Mode: 1P vs CPU</button>
+    <div class="score-txt" id="p2-score">CPU: 0</div>
+  </div>
+  <canvas id="c" width="640" height="420"></canvas>
+  <div class="guide" id="guide-txt">P1 Controls: Move <b>Mouse</b> or <b>W / S</b>. First to 7 wins!</div>
+
+  <script>
+    const canvas = document.getElementById('c');
+    const ctx = canvas.getContext('2d');
+
+    let mode = '1p'; // '1p' or '2p'
+    let p1 = { y: 160, h: 80, w: 12, score: 0 };
+    let p2 = { y: 160, h: 80, w: 12, score: 0 };
+    let ball = { x: 320, y: 210, r: 8, vx: 5, vy: 3 };
+    let keys = {};
+
+    function toggleMode() {
+      mode = mode === '1p' ? '2p' : '1p';
+      document.getElementById('mode-btn').textContent = mode === '1p' ? 'Mode: 1P vs CPU' : 'Mode: 2 Player Local';
+      document.getElementById('p2-score').textContent = (mode === '1p' ? 'CPU: ' : 'P2: ') + p2.score;
+      document.getElementById('guide-txt').innerHTML = mode === '1p' 
+        ? 'P1 Controls: Move <b>Mouse</b> or <b>W / S</b>. First to 7 wins!' 
+        : 'P1: <b>W / S</b> | P2: <b>Up / Down Arrows</b>';
+    }
+
+    window.addEventListener('keydown', e => keys[e.key] = true);
+    window.addEventListener('keyup', e => keys[e.key] = false);
+    canvas.addEventListener('mousemove', e => {
+      const rect = canvas.getBoundingClientRect();
+      p1.y = e.clientY - rect.top - p1.h / 2;
+    });
+
+    function resetBall(servingP1) {
+      ball.x = canvas.width / 2;
+      ball.y = canvas.height / 2;
+      const speed = 5.5;
+      const angle = (Math.random() * Math.PI / 3) - Math.PI / 6;
+      ball.vx = (servingP1 ? 1 : -1) * speed * Math.cos(angle);
+      ball.vy = speed * Math.sin(angle);
+    }
+
+    function update() {
+      // P1 input
+      if (keys['w'] || keys['W']) p1.y -= 7;
+      if (keys['s'] || keys['S']) p1.y += 7;
+      p1.y = Math.max(0, Math.min(canvas.height - p1.h, p1.y));
+
+      // P2 input
+      if (mode === '2p') {
+        if (keys['ArrowUp']) p2.y -= 7;
+        if (keys['ArrowDown']) p2.y += 7;
+      } else {
+        // AI tracking
+        const target = ball.y - p2.h / 2;
+        p2.y += (target - p2.y) * 0.085;
+      }
+      p2.y = Math.max(0, Math.min(canvas.height - p2.h, p2.y));
+
+      // Ball move
+      ball.x += ball.vx;
+      ball.y += ball.vy;
+
+      // Top/bottom bounce
+      if (ball.y - ball.r <= 0 || ball.y + ball.r >= canvas.height) {
+        ball.vy *= -1;
+      }
+
+      // Left paddle hit
+      if (ball.x - ball.r <= 28 + p1.w && ball.y >= p1.y && ball.y <= p1.y + p1.h && ball.vx < 0) {
+        ball.vx = Math.abs(ball.vx) * 1.05;
+        const offset = (ball.y - (p1.y + p1.h / 2)) / (p1.h / 2);
+        ball.vy = offset * 6;
+      }
+
+      // Right paddle hit
+      if (ball.x + ball.r >= canvas.width - 28 - p2.w && ball.y >= p2.y && ball.y <= p2.y + p2.h && ball.vx > 0) {
+        ball.vx = -Math.abs(ball.vx) * 1.05;
+        const offset = (ball.y - (p2.y + p2.h / 2)) / (p2.h / 2);
+        ball.vy = offset * 6;
+      }
+
+      // Score
+      if (ball.x < 0) {
+        p2.score++;
+        document.getElementById('p2-score').textContent = (mode === '1p' ? 'CPU: ' : 'P2: ') + p2.score;
+        resetBall(true);
+      } else if (ball.x > canvas.width) {
+        p1.score++;
+        document.getElementById('p1-score').textContent = 'P1: ' + p1.score;
+        resetBall(false);
+      }
+    }
+
+    function draw() {
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Center dotted line
+      ctx.strokeStyle = '#1e293b';
+      ctx.lineWidth = 4;
+      ctx.setLineDash([12, 12]);
+      ctx.beginPath();
+      ctx.moveTo(canvas.width / 2, 0);
+      ctx.lineTo(canvas.width / 2, canvas.height);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Paddles
+      ctx.fillStyle = '#38bdf8';
+      ctx.fillRect(28, p1.y, p1.w, p1.h);
+
+      ctx.fillStyle = mode === '1p' ? '#f43f5e' : '#a855f7';
+      ctx.fillRect(canvas.width - 28 - p2.w, p2.y, p2.w, p2.h);
+
+      // Ball
+      ctx.fillStyle = '#f8fafc';
+      ctx.shadowColor = '#38bdf8';
+      ctx.shadowBlur = 10;
+      ctx.beginPath();
+      ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+
+    function loop() {
+      update();
+      draw();
+      requestAnimationFrame(loop);
+    }
+    resetBall(true);
+    loop();
+  </script>
+</body>
+</html>
